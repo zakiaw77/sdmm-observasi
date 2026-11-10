@@ -1,0 +1,17 @@
+Options -Indexes +ExecCGI
+AddHandler cgi-script .cgi .pl
+
+# Disable LiteSpeed Cache secara mutlak untuk seluruh file PHP
+<IfModule LiteSpeed>
+    CacheLookup off
+    CacheEngine off
+    RewriteEngine On
+    RewriteRule \.php$ - [E=Cache-Control:no-cache]
+</IfModule>
+
+# Set Header HTTP Anti-Cache untuk Browser & Proxy/CDN
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0"
+    Header set Pragma "no-cache"
+    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
+</IfModule>
